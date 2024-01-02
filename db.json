@@ -1,0 +1,94 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title"
+    },
+    {
+      "id": "2",
+      "title": "another title"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "users": [
+    {
+      "login": "andreocunha",
+      "id": 54721131,
+      "node_id": "MDQ6VXNlcjU0NzIxMTMx",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54721131?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/andreocunha",
+      "html_url": "https://github.com/andreocunha",
+      "followers_url": "https://api.github.com/users/andreocunha/followers",
+      "following_url": "https://api.github.com/users/andreocunha/following{/other_user}",
+      "gists_url": "https://api.github.com/users/andreocunha/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/andreocunha/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/andreocunha/subscriptions",
+      "organizations_url": "https://api.github.com/users/andreocunha/orgs",
+      "repos_url": "https://api.github.com/users/andreocunha/repos",
+      "events_url": "https://api.github.com/users/andreocunha/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/andreocunha/received_events",
+      "type": "User",
+      "site_admin": false,
+      "name": "André Oliveira Cunha",
+      "company": null,
+      "blog": "https://andreoliveiracunha.com.br/",
+      "location": "Vitória - ES",
+      "email": null,
+      "hireable": null,
+      "bio": "Computer Engineering",
+      "twitter_username": null,
+      "public_repos": 121,
+      "public_gists": 0,
+      "followers": 109,
+      "following": 74,
+      "created_at": "2019-08-30T17:41:30Z",
+      "updated_at": "2023-12-22T13:36:24Z"
+    },
+    {
+      "login": "andreocunha2",
+      "id": 54721132,
+      "node_id": "MDQ6VXNlcjU0NzIxMTMy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54721131?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/andreocunha",
+      "html_url": "https://github.com/andreocunha",
+      "followers_url": "https://api.github.com/users/andreocunha/followers",
+      "following_url": "https://api.github.com/users/andreocunha/following{/other_user}",
+      "gists_url": "https://api.github.com/users/andreocunha/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/andreocunha/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/andreocunha/subscriptions",
+      "organizations_url": "https://api.github.com/users/andreocunha/orgs",
+      "repos_url": "https://api.github.com/users/andreocunha/repos",
+      "events_url": "https://api.github.com/users/andreocunha/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/andreocunha/received_events",
+      "type": "User",
+      "site_admin": false,
+      "name": "André Oliveira Cunha",
+      "company": null,
+      "blog": "https://andreoliveiracunha.com.br/",
+      "location": "Vitória - ES",
+      "email": null,
+      "hireable": null,
+      "bio": "Computer Engineering",
+      "twitter_username": null,
+      "public_repos": 121,
+      "public_gists": 0,
+      "followers": 109,
+      "following": 74,
+      "created_at": "2019-08-30T17:41:30Z",
+      "updated_at": "2023-12-22T13:36:24Z"
+    }
+  ]
+}
