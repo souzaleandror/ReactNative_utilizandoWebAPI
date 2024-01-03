@@ -2,6 +2,16 @@
 
 Curso de React Native: utilizando Web API
 
+```
+ npm install -g json server
+ npm install json-server@alpha
+ npm fund
+ npm audit fix
+json-server db.json
+json-server --watch --host 192.168.178.24  db.json
+npm start
+```
+
 @01-Conhecendo a Web API 
 
 @@01
@@ -24,7 +34,6 @@ Apresentação
 
 @@02
 Preparando o ambiente: instalando o Node.js
-PRÓXIMA ATIVIDADE
 
 Para esse curso, você precisará ter o Node.js instalado na sua máquina.
 Baixe a versão LTS no site oficial do Node.js e instale normalmente. Feito isso, é possível verificar se a instalação ocorreu bem, abrindo o terminal e digitando:
@@ -80,7 +89,6 @@ https://www.alura.com.br/api/cursos
 
 @@04
 Sobre Web API
-PRÓXIMA ATIVIDADE
 
 Vimos o que é uma Web API, onde ela é usada e sua importância para o desenvolvimento mobile.
 Considerando o conteúdo abordado, marque as alternativas verdadeiras:
@@ -120,7 +128,6 @@ https://github.com/typicode/json-server#getting-started
 
 @@06
 Preparando o ambiente: json-server
-PRÓXIMA ATIVIDADE
 
 Agora que sabemos a diferença entre uma Web API e uma Fake API, é hora de criarmos a nossa Fake API.
 Assim, vamos instalar do json-server, necessário para criar uma Fake API.
@@ -133,7 +140,6 @@ A documentação do json-server também se encontra nesse github, aproveite para
 
 @@07
 Preparando o ambiente: baixando o Insomnia
-PRÓXIMA ATIVIDADE
 
 Antes de finalmente colocarmos a mão na massa, falta uma ferramenta: o Insomnia.
 O Insomnia é um aplicativo que nos permite testar Web APIs e fazer vários tipos de requisições nelas. Ele é muito utilizado por diversos programadores, pois facilita os testes para saber se a Web API está funcionando direito e o que é retornado de resposta quando se faz a requisição.
@@ -202,7 +208,6 @@ Criando uma Fake API
 
 @@09
 Sobre o Insomnia
-PRÓXIMA ATIVIDADE
 
 Vimos sobre o Insomnia e sua importância no desenvolvimento de uma aplicação.
 Sobre o Insomnia, marque as alternativas verdadeiras:
@@ -225,7 +230,6 @@ Excelente! É isso mesmo, parabéns!
 
 @@10
 Para saber mais: Json-viewer
-PRÓXIMA ATIVIDADE
 
 Se você quiser utilizar a extensão que melhora a visualização da Web API, mostrando os dados em uma cor diferente, baixe a extensão clicando aqui.
 
@@ -233,7 +237,6 @@ https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibn
 
 @@11
 Faça como eu fiz: criando a Fake API
-PRÓXIMA ATIVIDADE
 
 Vimos, na Aula 1, como criar uma Fake API usando o json-server. Segundo a documentação oficial do json-server, para criar uma fake API, siga os passos a seguir:
 Passo 1): Instale a biblioteca na sua máquina com o comando no terminal:
@@ -321,7 +324,6 @@ Bons estudos
 
 @@12
 O que aprendemos?
-PRÓXIMA ATIVIDADE
 
 Nesta aula, aprendemos sobre:
 O que é uma Web API e por que utilizar:
@@ -333,3 +335,199 @@ O Insomnia é muito utilizado por pessoas desenvolvedoras para testar requisiç�
 A seguir, vamos entender melhor como implementar uma Web API com um projeto chamado AluraHub.
 
 Vamos lá?
+
+#### 03/01/2024
+
+@02-Configurando a Web API
+
+@@01
+Preparando o ambiente: configurando o Expo
+
+Agora que você aprendeu os fundamentos sobre Web APIs, é hora de aplicar tudo isso em um projeto!
+O AluraHub será o aplicativo que vai nos auxiliar em nossos estudos, e foi construído no React Native Expo.
+
+Caso você não tenha o Expo instalado, separamos um artigo para você fazer a instalação de forma descomplicada. Para acessá-lo, clique aqui.
+
+Bons estudos!
+
+https://www.alura.com.br/artigos/como-instalar-configurar-expo-do-react-native?utm_source=gnarus&utm_medium=timeline&_gl=1*iocmg*_ga*MTgwMzIzMjk2Ni4xNjg4ODE5OTcz*_ga_1EPWSW3PCS*MTcwNDMyMDk5OC4xNTEuMS4xNzA0MzIxMDcwLjAuMC4w*_fplc*UnhKRTJvQWglMkZ6bG1LNmlqcGNZVDYlMkYyUWRDYzNXYjlkV1paUUE5Qklhb0Z1ZFBDZEgxdjJ1SFBDOVFEeEV4d0doRjN5MGw3aUFWWHglMkZyNHRsbEJMZmdYaVVWbmlGVTJxUUtHaiUyRkNKbE05YURmRUFBM0pTVzQ2YXNDV0U1bnclM0QlM0Q.
+
+@@02
+Baixando o projeto
+
+Baixando o código no Git
+Para acompanhar o curso, baixe o projeto base do AluraHub, clicando aqui.
+
+Na página do git, clique no botão “Code” e selecione a opção “Download ZIP” para baixar o projeto.
+
+Recomendamos que teste o projeto e veja se ele apresenta os comportamentos esperados.
+
+Depois de baixar o projeto e testá-lo, é possível prosseguir no curso.
+
+Baixando o design no Figma
+Se você quiser, pode conferir também o design do projeto feito no Figma, clicando aqui.
+
+Para baixar o design, é necessário ter uma conta no Figma. Caso você não tenha, pode logar rapidamente com uma conta Google. Uma vez logado, acesse o nome do projeto no menu inferior e selecione a opção “Duplicate to your drafts”.
+
+Vamos lá?
+
+https://www.figma.com/file/xEHiFcNLsIEKdostk64RRZ/Ficando-Online---Design?node-id=0%3A1
+
+@@03
+Instalando o projeto
+
+[00:00] Vimos bastante sobre Web API e Fake API, mas e o nosso projeto? Vejamos como vai ser o nosso aplicativo? O foco desse curso é consumir uma Web API com React Native. Pensando nisso, não criaremos o aplicativo do zero, será fornecido para nós o mockup e o projeto base dele.
+[00:20] O mockup é isso que vocês estão vendo aqui na tela, nada mais são do que vários prints, várias capturas de tela, que o nosso aplicativo terá. Ele foi feito por um designer, então quem projetou e construiu o aplicativo base do nosso projeto, se baseou exatamente nesse mockup.
+
+Imagem das quatro telas do aplicativo. A primeira tela é a de principal com o perfil do usuário, a segunda tela é a da lista de repositórios, a terceira é a tela de criação de repositório no aplicativo e a quarta tela é a onde as informações do repositório podem ser editadas.
+
+[00:38] Aqui podemos perceber que temos a tela principal, que vai mostrar as informações de usuário, os repositórios, criar um repositório e até salvar e editar um repositório. Lembrando que a nossa aplicação tem como objetivo verificar se os usuários da plataforma da Alura podem editar informações deles e criar um repositório novo. Nós fomos contratados exatamente para isso.
+
+[01:05] Muitas vezes quando entramos em um projeto, ou uma empresa, nós não pegamos o projeto do zero, ou seja, não construímos ele lá do começo mesmo, criando as telas dos componentes. Nós já pegamos um projeto de andando, cuja base já foi construída, e a partir da base nós implementamos funcionalidades. No nosso caso, nossa missão é implementar as funcionalidades de buscar, editar, deletar e até criar dados novos.
+
+[01:31] Então será disponibilizado, em atividades, o link para vocês poderem baixar, do GitHub, o projeto. Vocês vão poder baixar o zip, descompactar no computador de vocês e aqui está todo o projeto, com os arquivos do projeto base. No terminal, vocês vão poder também instalar as dependências que o projeto necessita, só rodar um npm install e ele vai baixar todos os pacotes necessários de bibliotecas que esse projeto vai utilizar. Feito isso, vocês poderão rodar a aplicação para testar. Digitando expo start ou npm start, a aplicação será rodada.
+
+[02:09] Um ponto importante, nesse curso vamos utilizar o Expo. Como a ideia aqui é utilizar Web API, ele vai funcionar da mesma forma que se eu usasse com o React Native CLI. Para facilitar nossa vida e não ter que ficar configurando o ambiente do React Native, vamos usar o Expo, que já vai abstrair muita coisa e facilitar para nós. Porém, funcionaria da mesma forma consumir uma Web API com os dois tipos.
+
+[02:35] Com a aplicação rodando, vocês vão poder executar no simulador no emulador, ou até mesmo escanear no próprio celular para poder executar. Então o projeto base tem exatamente essa cara. Percebemos que a busca ainda não funciona, é só tudo estático, mas conseguimos navegar entre as telas. Podemos ir para tela que mostra os repositórios, porque não temos nenhum aqui, vamos poder criar um novo repositório e por aí vai.
+
+Aplicativo rodando no emulador com a tela "Criar repositório" aberta.
+
+[03:03] Nos próximos vídeos, vamos entender mais como que está o código base, que foi fornecido para nós, e implementar o consumo da Web API nessa aplicação. Até lá.
+
+@@04
+Entendendo o projeto
+
+[00:00] Agora que já baixamos e instalamos as dependências do nosso projeto, vamos entender como que está o código por trás dele? Começando no nosso arquivo “app.js”, que está na coluna da esquerda. Nesse arquivo principal da aplicação, percebemos que está ocorrendo a importação das rotas que estão vindo lá da pasta “src”.
+[00:21] Então vamos abrir esse arquivo. Acessando, na coluna da esquerda "scr > rotas.js", percebemos que foi feita a configuração do React Navigation, tal qual explicado no curso sobre navegação de telas. Aqui temos a importação das quatro telas na nossa aplicação: a tela principal, a de repositórios, a tela para criar um repositório, e a de informações do repositório.
+
+[00:46] Retornamos da nossa rota essas quatro telas, então, como percebemos, aqui em Rotas() está a importação de cada tela. Vamos ver então o que tem em cada tela. Acessando "src > paginas > Principal", percebemos dois arquivos. Um arquivo de “estilo.js”, que vai conter todo o CSS daquela página, e o arquivo “index.js”, que vai conter o código. Esse código principal é a estrutura da nossa página principal. Nós percebemos que foram criadas aqui duas variáveis que, por enquanto, não estão sendo utilizadas. Basicamente temos várias views e textos aqui para exibir. É exatamente essa tela que está rodando no simulador.
+
+[01:30] Então nós temos a imagem sendo exibida e temos o texto informando nome do usuário. Posso até mudar aqui para testarmos. Vou escrever aqui “ANDRE”. Agora está escrito "ANDRE" no aplicativo, onde era "Nome do usuário". Temos aqui o e-mail do usuário, que é o campo onde vai estar o e-mail, o número de seguidores, 30, o número de pessoas seguindo o André que são 40 e, embaixo, nós temos nosso botão aqui de “Busca”, para ver os repositórios. Na verdade, é um link, é o que está escrito aqui, ver repositórios, se clicarmos aqui nós vamos navegar para uma outra tela, já vamos clicar.
+
+[02:15] Embaixo dele temos um TextInput que é um novo componente. Ao longo desse curso vamos ver como que ele funciona, como que podemos utilizá-lo para, ao digitar alguma coisa dentro desse campo, como “ANDRE”, pegarmos essa informação que foi digitada e usar para alguma coisa. Também temos o botão de “Busca” aqui, que por enquanto não faz nada.
+
+[02:37] Então vamos lá. Clicando aqui em "Ver os repositórios", que também é um botão, podemos navegar para tela de repositórios. Indo para tela de repositórios, clicando na pasta “Repositorios”, na coluna da esquerda, percebemos que também é um código, que não tem muita coisa. Nós temos uma view envolvendo a tela inteira e temos um texto aqui que vai informar quantos repositórios foram criados.
+
+[03:02] No caso, o que ele está pegando aqui? Ele pegou essa variável "repo", que foi criada aqui no começo, e pegou o tamanho dela repo.length. Como é um array vazio, o tamanho é 0. Por isso que está sendo exibido "0 repositórios criados" na tela do aplicativo. Embaixo dele temos um botão com o texto “Adicionar novo repositório”. Ao clicar nesse botão, navegamos para uma terceira tela, que é a tela de criar um repositório.
+
+[03:30] Então vamos para pasta “Criar repositório”, na coluna da esquerda. Novamente temos aqui duas variáveis criadas que ainda não estão sendo usadas na tela. Temos a nossa view principal, que envolve a tela toda, temos a importação de dois TextInput, que são esses campos onde poderemos digitar alguma coisa, e o botão “Criar”, para poder criar um novo repositório que, por enquanto, também não tem efeito nenhum.
+
+[04:04] Por fim, uma tela que está faltando é a de informação de repositório. Percebemos que ela é bem parecida com essa de “Criar um novo repositório”. Nós temos dois TextInput, temos um botão “Salvar”, para salvar, e um botão “Deletar”, para poder deletar um repositório.
+
+[04:23] Com isso nós passamos por todas as telas e todos os códigos da nossa aplicação. Agora que entendemos melhor como que ela foi estruturada e como que já estão setadas as variáveis, nos próximos vídeos vamos de fato configurar nossa Fake API e integrar dentro do código dessa aplicação que acabamos de ver. Até lá.
+
+@@05
+Download do Axios
+
+Ao longo deste curso, vamos utilizar o Axios como uma ferramenta para fazer as requisições na nossa Fake API dentro do React Native. A documentação oficial se encontra aqui.
+Recomendamos que você acesse a documentação do Axios, pois ela ensina o passo a passo para baixar e usar os comandos básicos, que também vamos aprender.
+
+É essencial instalar o Axios antes de prosseguir para a. :)
+
+Para acessar a documentação da ferramenta, clique aqui!
+
+https://github.com/axios/axios
+
+https://github.com/axios/axios
+
+@@06
+Configurando a API no app
+
+[00:00] Agora que entendemos o código por trás da nossa aplicação, vamos fazer nossa primeira requisição do nosso aplicativo.
+[00:08] Existem várias formas de fazer uma requisição para uma Web API com o React Native. Porém as duas formas mais utilizadas e mais conhecidas, são usando o fetch, que é um próprio serviço do JavaScript, que permite conectar uma Web API e consumir os dados, seja fazendo um GET, um DELETE, um POST. Porém, neste curso vamos utilizar uma biblioteca externa, chamada Axios. A vantagem do Axios em relação ao fetch, é que o Axios vai facilitar para nós a resposta que a API vai retornar.
+
+[00:37] Lembrem que quando usamos um Insomnia e fizemos um GET dos usuários, e o que foi nos retornado era um JSON com os campos nome e data. O fetch não vai retornar imediatamente esse JSON. Teríamos que tratar esses dados para que, no final, ele retornasse dessa forma.
+
+[00:56] Já o Axios fará exatamente isso. Vamos fazer um GET e ele vai nos retornar esse JSON. Outra vantagem do Axios é no tratamento dos erros. Sabe quando você acessa uma página web e retorna “erro 404”, que não foi possível acessar? O fetch não necessariamente vai retornar esse erro para nós. Teríamos que tratar até mostrar essa mensagem. Já o Axios vai retornar esse “erro 404” certo, então vai facilitar a identificação de ocorreu algum erro na requisição da web API.
+
+[01:29] Dito isso, aqui temos a nossa documentação oficial do Axios. É um link do GitHub que será fornecido por meio de atividades. Aqui tem todo o processo de instalação, alguns exemplos, e como usar o Axios.
+
+[01:44] O Axios ele pode ser usado além do React Native. Ele pode ser usado no React, por exemplo. Então aqui tem as instruções de instalação. Vamos segui-las, abrindo o nosso código e o terminal e instalando o Axios. Para isso vamos digitar npm install axios no terminal. Porém, vamos utilizar a mesma versão. Caso tenha uma versão futura, pode ser que a forma que passamos a requisição seja um pouco diferente, então, para evitar isso, vamos sempre utilizar a mesma versão do curso. Para digitar a versão, vamos digitar `@0.26.0` e clicar em “Enter”. Ele vai baixar a biblioteca do Axios e importar na nossa aplicação.
+
+[02:29] Agora que temos o Axios instalado, vamos até fechar o terminal. Vamos criar uma pasta aqui dentro da pasta “src”, chamada “service”, ou serviço. Vamos criar aqui pasta “servicos” e dentro dela vamos criar um arquivo chamado “api.js”.
+
+[02:52] Neste arquivo, vamos fazer a importação do Axios e conectar com a nossa Fake API. Então vamos fazer o import do Axios, escrevendo import axios from "axios";, agora que o Axios foi importado, vamos conectar com a nossa Web API. Para isso vamos criar uma variável chamada const api, e ela vai ser = axios.create, porque vamos criar a conexão aqui com a nossa aplicação. Abrimos os parênteses, abrimos chaves ({}) e, aqui dentro, vamos conectar com a URL da nossa Fake API.
+
+[03:26] Para isso, digitamos baseURL: "" e vamos abrir uma string para colocarmos a nossa URL da Web API. Porém, quando rodamos a nossa Web API, ele rodava em localhost. Vamos abrir aqui o terminal só para ver a Web API. Rodávamos esse comando json-server --watch db.json, e isso nos fornecia o localhost, aqui na porta 3000, mas o localhost quer dizer que ele vai rodar apenas no computador. Então mesmo o dispositivo usando o emulador que está no computador, ele está emulando como se fosse um dispositivo fora do computador, como se fosse um celular na sua mão.
+
+[04:14] Como ele não está, de fato, no seu computador, se ele tentar fazer uma requisição para o localhost, vai retornar um erro, porque ele não está no computador. Para contornar isso e fazer com que tanto seu dispositivo físico, se você estiver usando o aplicativo do Expo, lendo QR Code, ou emulador funcione para fazer requisição, vamos precisar achar o endereço IP da máquina e substituir do localhost. Isso permitirá que qualquer dispositivo na sua rede WiFi conecte no json-server.
+
+[04:51] Então vamos achar aqui o nosso endereço IP desse computador. Uma forma simples de você fazer isso é abrindo o próprio site que abre o Expo quando você roda ele. Nele é fornecido o endereço IP da sua máquina, no meu caso aqui, é 192.168.15.43. Esse 19000 é a porta que está rodando a aplicação, não vamos nos preocupar com ele, apenas com esse começo.
+
+[05:16] Então você vai conseguir achar o seu endereço IP dessa forma. Existem outras formas, mas esse aqui vai ser o mais simples que vamos usar aqui no curso. Abrindo o nosso terminal, vamos fazer com que o nosso Json Serve não rode mais em localhost, mas sim nesse endereço IP.
+
+[05:33] Para isso, vamos rodar o mesmo comando, só que aqui depois do watch, vamos colocar --host, e o endereço IP que lemos aqui, 192.168.15.43. Clicando em “Enter”, ele vai retornar para nós. Ao invés de localhost na porta 3000, vai rodar o endereço IP na porta 3000. Se rodarmos essa aplicação de novo, seja no Insomnia ou no nosso navegador, veremos que vai funcionar da mesma forma, como se fosse localhost. Porém, agora os nossos dispositivos vão conseguir, de fato, se conectar com a nossa Web API.
+
+[06:13] Vou deixar aqui nossa Web API rodando. Vou só minimizar o terminal e vamos voltar para o código do aplicativo. Então aqui na nossa baseURL, passaremos esse endereço IP que pegamos ”http://192.168.15.43:3000/”. Vamos colocar apenas a porta 3000, então vamos ter exatamente isso o seu endereço IP e 3000, que é a porta que está rodando o nosso Json Server.
+
+[06:46] agora que criamos esse API, vamos exportá-lo. Então vamos dizer export default api;. Dessa forma, vamos conseguir acessar essa variável API em outras telas, como a tela principal, que é onde vamos fazer nossa primeira requisição nesse exato momento.
+
+[07:05] Então vou deixar aqui do lado o nosso simulador e vamos salvar esse arquivo. Agora vamos abrir a nossa página principal, acessando "src > principal > index.js" e vamos fazer, no começo do código, a importação dessa API que conectamos aqui. Então vou fazer import api from '../../servicos/api';, pasta API.
+
+[07:32] Vamos fazer a nossa primeira requisição com essa API. Para isso, antes do return, vamos criar uma função "busca". Então function Busca(){}. Dentro dessa busca, vamos fazer, de fato, uma busca na nossa API.
+
+[07:55] Isso é muito simples, vamos escrever api.. Aqui ele já fornece alguns métodos para nós, e lembra, quando vamos consumir os dados usamos o GET, que é o tipo da requisição.
+
+[08:07] Então vamos usar o api.get(''). Dentro do .get(), vamos passar o endereço, porque, lembrem, se colocarmos "/users", ele vai pegar os usuários, se colocarmos “/repo”, ele vai pegar os repositores. Então vamos escrever api.get('/users') para ele pegar os usuários.
+
+[08:30] Feito isso, então vamos escrever .then, que quer dizer, depois que ele fez a requisição. O que que vai acontecer? Ele retorna uma resposta, que vamos chamar aqui de response => e será uma função, uma arrow function. Dessa forma, quando fizermos um {console.log()}, nós vamos poder exibir os dados desse response. Vamos digitar aqui response e, normalmente, os dados vêm como console.log(response.data). Então quer dizer que ele vai pegar a informação dos dados que chegou da nossa requisição.
+
+[09:20] Para testarmos essa função, vamos fazer com que ao clicar nesse botão, independente do que está escrito aqui no nosso input, ele chame a função e exiba esses usuários. Então no nosso botão de “busca” vamos escrever onPress, quer dizer "ao apertar". Vamos chamar nossa função de busca. Existem várias formas de se fazer isso. Podemos criar uma arrow function aqui também assim: ={() => Busca()}. Ele funcionará da mesma forma. Para simplificar, podemos simplesmente digitar onPress={Busca}.
+
+[10:05] Agora, para vermos o que que vai acontecer, vou abrir o meu terminal, já que usamos um console.log. Esse console que vai mostrar o resultado a ser exibido no nosso terminal. Então, abrindo aqui o terminal da nossa aplicação que está rodando, vamos agora apertar o botão de busca e ver o que vai acontecer. Ele nos retornou exatamente um array, que vai conter os objetos que terão os dados: vai ter a imagem, a URL da imagem, vai ter o e-mail, seguidores, o nome. Então nós acabamos de fazer nossa primeira requisição usando a aplicação com React Native.
+
+[10:47] Podemos fazer algumas coisas para melhorar. Por exemplo, e se der algum erro? O que vai acontecer? Podemos, após esse parênteses do then(), podemos escrever .catch(). O catch quer dizer que irá capturar um erro. Então, dentro dos () vamos digitar (error =>{}). Ele também será uma arrow function, então novamente podemos fazer um console.log(error).
+
+[11:25] Então se, por exemplo, tentarmos acessar uma rota que não existe, ele provavelmente vai cair no erro. Ele nos retornou aqui o “erro 404”, que tentou acessar uma rota da Web API que não existe. Dessa forma poderemos tratar vários erros e prevenir que a nossa aplicação quebre, deixando tudo0 bagunçado. Voltaremos para o ('users') e faremos uma requisição de novo. Os dados estão sendo exibidos corretamente.
+
+[11:55] Nesse vídeo ficamos por aqui. No próximo vídeo vamos fazer uma busca pelo usuário, digitando o nome de login no campo, e retornaremos os dados só desse usuário. Nas próximas aulas, vamos aprender a fazer requisições dos repositórios, a editá-los e os apagar. Até lá.
+
+@@07
+Axios vs Fetch
+
+Vimos que existem algumas formas de fazer requisições em uma Web API com o React Native, entre elas, usando o Axios e o Fetch.
+Sobre eles, marque as alternativas corretas:
+
+O Axios é uma biblioteca externa, que pode ser baixada e instalada em projetos React Native, por exemplo. O Axios já trata os dados que estão sendo recebidos, convertendo automaticamente para JSON. Por sua vez, no Fetch há um processo de duas etapas ao entregar dados JSON.
+ 
+Boa! O Axios facilita a forma como fazemos as requisições nas Web APIs, seja na forma como o resultado vem (JSON) ou até mesmo no tratamento de erros de requisições.
+Alternativa correta
+Só é possível usar um dos dois métodos, Axios ou Fetch, em um projeto. Caso tente utilizar os dois no mesmo projeto, ocorrerá um erro.
+ 
+Alternativa correta
+O Fetch é um uma interface JavaScript que permite, sem precisar instalar nada externo, acessar e manipular APIs http, fazendo requisições nelas.
+ 
+Exatamente! É possível fazer todos os tipos de requisições, utilizando o Fetch, sem precisar instalar nenhum
+
+@@08
+Para saber mais: Fetch
+
+Como vimos, vamos fazer requisições com o Axios, pois é uma ferramenta mais simples, que dispensa a necessidade de códigos complexos de back-end e, portanto, é mais adequada para fins didáticos.
+Se você quiser saber mais sobre o Fetch, recomendamos que leia este artigo sobre requisições feitas com Fetch.
+
+https://www.alura.com.br/artigos/react-native-fazendo-requisicoes-fetch?_gl=1*k5my4p*_ga*MTgwMzIzMjk2Ni4xNjg4ODE5OTcz*_ga_1EPWSW3PCS*MTcwNDMyMDk5OC4xNTEuMS4xNzA0MzIxODM1LjAuMC4w*_fplc*UnhKRTJvQWglMkZ6bG1LNmlqcGNZVDYlMkYyUWRDYzNXYjlkV1paUUE5Qklhb0Z1ZFBDZEgxdjJ1SFBDOVFEeEV4d0doRjN5MGw3aUFWWHglMkZyNHRsbEJMZmdYaVVWbmlGVTJxUUtHaiUyRkNKbE05YURmRUFBM0pTVzQ2YXNDV0U1bnclM0QlM0Q.
+
+@@09
+Faça como eu fiz: buscando dados
+
+Nesta aula, configuramos o ambiente React Native para poder lidar com requisições com a nossa Fake API e fizemos uma requisição GET para testar o código.
+Agora é sua vez! Configure seu ambiente, caso ainda não tenha feito isso, e implemente a possibilidade de fazer uma requisição GET para ver se o projeto funciona corretamente.
+
+Precisando de ajuda ou tendo alguma dúvida, pergunte no fórum para que possamos te ajudar! Bons estudos ;)
+
+Nesta atividade, os objetivos eram que você conseguisse: **1)** Configurar corretamente o seu ambiente (se não tivesse feito isso); **2)** Integrar a Fake Web API ao projeto; **3)** Implementar a funcionalidade de busca de informações no aplicativo AluraHub. Existem diversas formas de solucionar esses problemas. Veja a nossa sugestão abaixo e compare com o seu código, [clicando aqui](https://github.com/alura-cursos/react-native-ficando-online/tree/aula2).
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/aula2
+
+@@10
+O que aprendemos?
+
+Nesta aula, vimos sobre:
+O que é o projeto:
+Nessa aula, entendemos melhor o código do app fornecido para esse curso, passando por cada tela e vendo os códigos nos arquivos.
+Como configurar uma Web API no React Native:
+Aprendemos a instalar o Axios e configurá-lo no projeto. Além disso, entendemos o porquê de usar o Axios ao invés do Fetch.
+Como fazer uma requisição GET:
+Fizemos a primeira requisição do CRUD, chamada GET, para buscar todas as informações com a Web API.
+Logo mais, vamos começar a implementar mais requisições em React Native para a nossa Fake API.
