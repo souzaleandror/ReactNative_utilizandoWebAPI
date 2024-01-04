@@ -24,7 +24,7 @@
   "users": [
     {
       "login": "andreocunha",
-      "id": 54721131,
+      "id": 1,
       "node_id": "MDQ6VXNlcjU0NzIxMTMx",
       "avatar_url": "https://avatars.githubusercontent.com/u/54721131?v=4",
       "gravatar_id": "",
@@ -58,7 +58,7 @@
     },
     {
       "login": "andreocunha2",
-      "id": 54721132,
+      "id": 2,
       "node_id": "MDQ6VXNlcjU0NzIxMTMy",
       "avatar_url": "https://avatars.githubusercontent.com/u/54721131?v=4",
       "gravatar_id": "",
@@ -89,6 +89,50 @@
       "following": 74,
       "created_at": "2019-08-30T17:41:30Z",
       "updated_at": "2023-12-22T13:36:24Z"
+    }
+  ],
+  "repos": [
+    {
+      "name": "api-escolas23",
+      "data": "1 de jan. de 20223",
+      "postId": 1,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "name": "Arduino_AVES_Telemetria",
+      "data": "1 de jan. de 2021",
+      "postId": 1
+    },
+    {
+      "id": 4,
+      "name": "bot_piano_tiles",
+      "data": "1 de jan. de 2021",
+      "postId": 1
+    },
+    {
+      "id": 1,
+      "name": "2048evolution",
+      "data": "1 de jan. de 2021",
+      "postId": 2
+    },
+    {
+      "id": 2,
+      "name": "alura-pikachu",
+      "data": "1 de jan. de 2021",
+      "postId": 2
+    },
+    {
+      "id": 3,
+      "name": "alura-react-native-comecando-do-zero",
+      "data": "1 de jan. de 2021",
+      "postId": 2
+    },
+    {
+      "id": 5,
+      "name": "Alura_cursos",
+      "data": "1 de jan. de 2021",
+      "postId": 1
     }
   ]
 }

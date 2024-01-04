@@ -531,3 +531,284 @@ Aprendemos a instalar o Axios e configurá-lo no projeto. Além disso, entendemo
 Como fazer uma requisição GET:
 Fizemos a primeira requisição do CRUD, chamada GET, para buscar todas as informações com a Web API.
 Logo mais, vamos começar a implementar mais requisições em React Native para a nossa Fake API.
+
+#### 04/01/2024
+
+@03-GET e PUT: pegando e atualizando dados
+
+@@01
+Projeto da aula anterior
+
+Caso queira começar o curso a partir desta aula, você pode baixar o projeto da aula anterior.
+Bons estudos!
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/aula2
+
+@@02
+Buscando usuários
+
+[00:00] Acabamos de configurar nossa Web API na aplicação e fizemos uma requisição simples, listando todos os usuários que tinham no nosso JSON. Porém, existe uma forma de informarmos para nossa Web API que só queremos os dados de um usuário em específico, porque se você reparar nessa tela aqui de busca, vamos listar as informações só de um usuário, e não de todos.
+[00:20] Se nós formos na documentação do Json Server, existe uma rota que ele dá, a "/post/1". Quer dizer que ele retornaria o post de ID 1. No nosso caso, usaríamos "/post/1" e receberíamos o usuário de ID 1. Só que não sabemos o ID dos usuários, então não é uma forma interessante de trabalharmos no momento, com ID. Existem os filtros, onde podemos, por exemplo, buscar por algum campo de alguma informação do usuário.
+
+[00:48] No caso, aqui fez um /posts?title=json-server. Quer dizer que ele está procurando um post com título de "json server". Podemos usar a mesma coisa para buscar, por exemplo, pelo login do usuário. Vamos ver se isso funciona? Voltando aqui para nossa função de busca. Ao invés de utilizarmos /users, que vai listar todos os usuários, vamos escrever ’/users?login=’ e colocar um login que está salvo no nosso JSON, que é andreocunha.
+
+[01:18] Agora quando clicarmos em “Buscar”, ele vai buscar pelo usuário que tem esse login e vai retornar os dados só desse usuário. Se levantarmos o terminal aqui, temos aquela informação de antes, listando todos. Vou limpar e clicar em “Buscar”. Agora ele listou os dados só de um usuário.
+
+[01:37] Antes de pegarmos essas informações que estão no terminal, e mostrar na tela que, por enquanto, está estática, os dados não alteram quando buscamos. Vamos aplicar umas boas práticas de programação no nosso código?
+
+[01:50] Imagina que essa aplicação tivesse outras telas que também fizessem a mesma busca por login. Basicamente teríamos que copiar essa mesma função em cada tela. Agora imagina que precisamos alterar essa função. Vamos ter que ir em cada tela e alterá-la de novo, todas.
+
+[02:05] Para evitar esse trabalho repetitivo, costumamos encapsular essas funções em um arquivo à parte. Então, para as funções que vamos fazer de busca para o usuário, vamos na pasta “servicos” e criaremos uma pasta chamada “requisicoes”. Dentro de “requisicoes”, criaremos um arquivo chamado “usuarios.js”, que será referente às funções de busca ou criação de usuário. Todas as funções referentes à usuário ficarão aqui.
+
+[02:36] Então vamos criar aquela função que está na nossa página principal aqui. Vou criar com export function, já que ela está na nossa página principal. Uma outra boa prática para o nosso código ficar elegante no React Native é, quando criamos um componente ou uma página em si, criamos uma função com a primeira letra maiúscula. Só que isso não é um componente, nem uma página, só uma função para fazermos uma requisição para Web API. Então vamos criar com uma letra minúscula, escrevendo buscaUsuario(){}.
+
+[03:13] Nela vai ficar o código que fizemos da requisição. Só que nós fizemos o código usando o then e o catch, que é uma forma de fazer uma requisição, caso ele encontre alguma coisa. Ele entra no then, caso dê erro ele entra no catch.
+
+[03:28] Outra forma que fica melhor de visualizar é usando o try catch, então vamos usá-lo aqui. Escrevemos try{} e, dentro dele, faremos a nossa requisição. Uma forma de pegarmos os dados da nossa requisição é salvando em uma variável.
+
+[03:44] Então vamos criar uma variável chamada const resultado e agora, de fato, vamos mexer com a nossa Web API. Antes de escrevermos a api, vamos importá-la, com import api from "../api". Agora vamos escrever o nosso const resultado = api.get(), que é a mesma coisa que fizemos na página principal. Vou escrever aqui, ('/users?login=andreocunha');.
+
+[04:16] Então, se ele conseguir retornar os dados da API, tudo ficará salvo em resultado. Como vamos usar essa função lá na página principal, é interessante retornarmos esse resultado para página principal.
+
+[04:30] Então vamos escrever return resultado, lembrando que o resultado, conforme vimos aqui no terminal, vem dentro de um array. Claro, ele está dentro de data, como eu tinha feito lá na página principal também. Então colocamos .data e, como é um array e queremos retornar apenas os dados do objeto, colocamos a posição zero[0], que é a primeira posição do array, onde vai ter o único objeto da busca.
+
+[04:54] Agora, caso dê um erro, escrevemos catch(error){} e aqui podemos colocar um console.log(error), imprimindo o erro. Além disso, eu vou retornar aqui um objeto vazio, quer dizer que ele não encontrou nada, return {}.
+
+[05:16] Só que uma coisa importante, quando estamos trabalhando com Web API às vezes a Web API tem tanto dado que ela demora retornar a informação. Então temos que colocar na nossa função para esperar alguma informação da Web API chegar. Como aqui tinha pouco dado, acabou dando certo, só que temos que implementar essa função para que ela espere que chegue o resultado da Web API. Para isso, temos que transformar nossa função em assíncrona, para falar “ok, estou pedindo uma coisa para Web API, mas espera chegar alguma informação para assim você pode prosseguir com o código".
+
+[05:54] Então, antes de colocar aqui function, vamos escrever async, e antes de api, colocamos await. Dessa forma ele vai esperar chegar uma informação da Web API para, depois, retornar alguma informação, seja o resultado ou o erro. Vamos salvar.
+
+[06:10] Agora, na nossa página principal, vamos importar essa função que acabamos de criar, com import { buscaUsuario} from ‘../../servicos/requisicoes/usuarios;’. Em seguida, na nossa função de Busca(), vamos usar essa função. Também implementaremos uma boa prática para o código ficar elegante, escrevendo busca(), com letra minúscula, e no botão eu vou escrever também {busca} com letra minúscula aqui no onPress.
+
+[06:43] Voltando para a função, vamos chamar a buscaUsuario que criamos. Vou criar aqui também uma variável com o resultado, já que vai ser retornado uma informação de lá. Escrevemos aqui buscaUsuario().
+
+[06:57] Lembrando que, como temos que esperar, também vamos transformar essa função em assíncrona. Então, antes de function, escrevemos async, e antes de buscaUsuario() colocamos await.
+
+[07:09] Agora podemos codar um console.log() para imprimir o resultado e checar se está funcionando. Vou levantar o terminal aqui, clicar em buscar no aplicativo e agora ele retornou o nosso objeto com a informação do “André". Está funcionando perfeitamente.
+
+[07:30] Vamos até fazer uma verificação aqui. Podemos fazer um if (resultado) dentro da busca(). Quer dizer que, caso chegue alguma coisa em resultado, podemos, por exemplo, salvar esses dados na variável usuario, que já temos e é um objeto que, por enquanto, está vazio.
+
+[07:46] Então vamos colocar aqui setUsuario(resultado), passando o resultado. Caso ele dê erro, else{}. Portanto, se ele não encontrou o usuário, podemos imprimir um alerta aqui na tela, escrevendo um Alert.alert('Usuario nao encontrado').
+
+[08:12] Agora que temos isso aqui funcionando, vamos mostrar na tela essas informações. No campo das views, temos, por exemplo, “ANDRE” que está escrito diretamente no código. Agora temos as informações salvas no nosso objeto usuário.
+
+[08:30] Então vamos escrever aqui usuario.name. Esse name é o campo que, se olharmos no terminal, terá o nome do usuário. Vamos ver se essa parte está funcionando? Vou salvar o código e, no app, vou clicar em buscar. Ele exibiu o nome completo na tela do aplicativo, então está funcionando.
+
+[08:46] Vamos preencher agora os outros campos no código. O do e-mail, da mesma forma, usuario.email, o dos seguidores, vamos ver no terminal como é dos seguidores, então usuario.following, e onde está escrito 40, vamos colocar usuario.followers. Na verdade é ao contrário, primeiro é quem está seguindo e depois são os seguidores. Mais um campo que está faltando é o da imagem. Temos essa string, podemos colocar usuario.avatar_url.
+
+[09:42] Ao salvarmos, as informações já estão sendo exibidas conforme esperado, só que ainda não está dinâmico. Não escrevemos nada aqui e clicamos em “Buscar” para apresentar algo conforme a busca. Para editar isso, podemos usar essa outra variável que temos aqui em nomeUsuario, o nosso TextInput. É no input que vamos poder escrever as informações.
+
+[10:08] Então, indo até o TextInput, reparamos que ele tem o placeholder, que é esse texto que está escrito aqui, o autoCapitalize="none", para quando o teclado se levantar ficar tudo minúsculo, e o estilo.
+
+[10:19] Podemos passar também o valor, que vai ser o valor da variável, value={nomeUsuario}, e uma função, que é onChangeText. Quer dizer que, ao mudar o texto, ele faz alguma coisa. Podemos colocar uma arrow function aqui, ={(texto) => setNomeUsuario(texto)}. Isso aqui já vai funcionar, mas podemos passar de uma forma mais simplificada, apenas o setNomeUsuario, que vai funcionar da mesma forma. O que for escrito aqui no input será salvo dentro da variável nomeUsuario.
+
+[11:01] Com o nome do usuário escrito dentro dessa variável, podemos passá-la, por exemplo, como parâmetro para nossa função de busca. Então vou escrever aqui nomeUsuario. Agora, se formos na nossa função de busca, teremos uma variável como parâmetro, a nomeUsuario e, no campo onde está a string com caminho da Web API, vamos colocar essa variável.
+
+[11:23] Para poder adicionar a variável, uma forma é apagamos essa string, que está com aspas simples '', e coloca crase ``. E aqui no lugar onde está escrito andreocunha, colocamos ${nomeUsuario}. Dessa forma, se buscarmos realmente pelo nome no aplicativo, vamos escrever "nataliakt" no campo de busca, e clicar em "Buscar", ele retornar as informações da Natália. Então nosso sistema de busca já está funcionando.
+
+[11:50] Para finalizar, vamos implementar algumas coisas. Está vendo que ainda tem um texto escrito no input? Podemos limpar depois que for feita a busca, então colocamos aqui, setNomeUsuario(''), com string vazia.
+
+[12:06] Se ele não encontrar nada, vai mostrar um alerta. Vamos escrever um nome que não existe, como "adsadsasd", apareceu "Usuario nao encontrado". Mais uma coisa, se recarregarmos a aplicação, vou abrir o meu terminal e digitar “R”, você percebe que os campos estão vazios, o que, às vezes, não interessante, porque aplicação não fica tão bonita.
+
+[12:26] Podemos colocar aqui que os campos só apareçam se ele realmente encontrar alguém na busca. Então, antes do fragmento, podemos colocar uma verificação como se fosse um if. Se tiver dados, ele mostra essas informações, senão, ele não mostra nada.
+
+[12:41] Para isso vamos abrir chave aqui e fechar lá no final do fragmento. Antes do fragmento, mas depois da chave, escrevemos, por exemplo, a variável usuario. Caso ele encontre alguma coisa em usuario, como o login, ele vai mostrar tudo que está aqui embaixo, , ou seja, usuario.login &&. Se ele não encontrar, ele não vai mostrar nada.
+
+[13:12] Acabamos colocando a } no lugar errado, vamos colocar aqui depois do fragmento e indentar. Outra coisa é, às vezes, quando você iniciar a aplicação, não vai ter nada em usuário, então ele vai tentar acessar o campo login e pode dar erro, para evitar isso colocamos uma interrogação antes do ponto usuario?.login.
+
+[13:32] Agora não está exibindo nada na tela do app. Se digitarmos andreocunha e clicarmos em buscar, ele exibe a informação. Está funcionando muito bem, só que, por exemplo, se eu buscar aqui por um usuário que não existe, ele acabou mantendo informação anterior exibida. Podemos limpar isso, caso ele não encontre. Dentro do else, colocamos setUsuario e um objeto vazio, {()}. Agora, salvando e buscando por um usuário que não existe, ele limpa e podemos fazer a nossa busca de novo. Vou escrever aqui “nataliakt” e clicar em "Buscar".
+
+[14:10] Finalizamos a aula por aqui. Aprendemos a fazer uma busca com filtro, exibir os dados em tela e também aplicar boas práticas de programação, encapsulado nossas funções de Web API em uma pasta específica. Na próxima aula vamos aprender a fazer outras requisições, as requisições dos repositórios, que são os códigos que cada usuário fez e salvou no AluraHub, até lá.
+
+@@03
+Buscando repositórios
+
+***[00:00] Acabamos de finalizar nossa tela de busca e está funcionando, exibindo os dados do usuário. Porém, se clicarmos no *link, “Ver os repositórios”, no aplicativo, somos redirecionados para a página de repositórios, onde seriam listados todos os projetos que aquele usuário fez.
+[00:15] Os repositórios nada mais são do que os projetos feitos e publicados na AluraHub. Então a Natália fez alguns projetos só que ainda não está sendo exibido, porque não pedimos para nossa Fake API nos retornar essas informações.
+
+[00:29] Se repararmos no nosso arquivo "db.json", que é onde a nossa Fake API retorna, pega e altera as informações, no campo de repositórios temos um array com vários objetos, e cada objeto chamado tem um campo chamado postId. Ele faz referência ao ID do usuário, então todo repositório que tem um postId = 1 é referente ao usuário de ID 1, que no caso é o André, e todo repositório que tem um postId = 2, é referente ao usuário 2 que é a Natália.
+
+[00:59] Se voltarmos na nossa tela de principal, podemos retirar essa API, porque não estamos usando a API de fato, estamos usando uma função que tem a API importada nessa função.
+
+[01:12] Podemos também passar o ID do usuário como parâmetro para essa tela de repositório, já que vamos precisar desse ID para fazer uma requisição na nossa Fake API. Então vamos até o código do botão onde clicamos para navegação de tela, levando para tela de repositórios. Podemos colocar aqui vírgula abrir e fechar chaves e passar o ID como parâmetro, codando , {id: usuario.id}. Dessa forma estamos passando o ID como parâmetro para rota e, na tela de repositório, conseguimos pegar esse ID e usar na nossa rota para Fake API.
+
+[01:52] Vamos para nossa tela de repositórios. Aqui conseguimos perceber que já tem uma variável repo, onde salvaremos os dados dos repositórios. Só que precisamos da nossa função para fazer a requisição para Fake API. Então, na pasta “requisicoes”, vamos criar um arquivo chamado “repositorios.js”, que vão conter todas as funções referentes a requisições para a Fake API.
+
+[02:20] Vamos importar nossa API aqui dentro. Depois vamos criar a nossa função para listar os repositórios de um usuário específico, com export async function, lembrando que a função vai ter que ser assíncrona, e pegarRepositoriosDoUsuario. Vamos passar o ID como parâmetro, já que vamos colocar a nossa rota para Web API.
+
+[02:57] Então aqui será o mesmo padrão que fizemos nos “usuarios.js”. Vou aproveitar e copiar a função que tem aqui, o try catch, para colar no nosso repositório. Uma pequena diferença na nossa função é que não vamos usar a rota de usuários, vamos usar a rota de repositórios. Então vamos escrever repos no lugar de users e, ao invés de buscar pelo login, vamos buscar pelo postId, lembrando que o “I” é maiúsculo do Id e aqui vamos passar o parâmetro.
+
+[03:29] Não vamos retornar apenas o primeiro objeto da lista. Para retornar a lista inteira, vamos retirar esse [0] do .data[0]. Caso dê um erro, ele vai retornar uma lista vazia, então return[].
+
+[03:42] Voltando para nossa tela de repositórios, podemos importar essa função que criamos, com import { pegarRepositoriosDoUsuario}. Como queremos pegar esses repositórios toda vez que entrarmos nessa tela, podemos usar o hook do useEffect, porque o useEffect, ele é executado toda vez que ele entra na tela.
+
+[04:06] Vamos criá-lo, codando useEffect(() =>{},[]), lembrando de deixar um []. Vamos pegar essas informações, com const resultado = pegarRepositoriosDoUsuario(), passando ID como parâmetro. Lembram que passamos o ID como parâmetro da tela principal para essa tela? Vamos pegar pela rota, então escrevemos (route.params.id). Ele vai pegar, das rotas, o parâmetro ID.
+
+[04:44] Então aqui temos o ID do usuário. Dando certo, podemos escrever um console.log(resultado) para vermos o que acontecerá. Deu um erro no aplicativo, porque eu estava já na tela e não tinha nenhum ID passado como parâmetro. Eu vou minimizar isso aqui, clicando no botão "Minimizar" no canto inferior direito da tela. Em seguida, vou recarregar minha aplicação. Vou levantar o terminal e executar um “R” para ele recarregar. Vou limpar a aplicação e vamos buscar por um usuário, a "nataliakt". Vamos clicar em “ver repositórios”.
+
+[05:14] Ao invés dele retornar a lista com os objetos, ele retornou essa "Promise". Isso porque a nossa função tem que esperar chegar, lembra? Então precisamos colocar um await na frente do pegarRepositoriosDoUsuario(), e transformar esse useEffect em assíncrono, escrevendo async, para, se salvarmos, ele retornar para nós um array com todos os objetos.
+
+[05:37] Agora precisamos salvar essas informações no repo, então, ao invés do console, escrevemos setRepo(resultado). Se repararmos, ele já está listando que tem 3 repositórios, no aplicativo, só que ele não listou de fato. Para isso, vamos usar o FlatList, criando uma lista de repositórios. Vamos ver como a FlatList está importada. Importamos ela lá em cima, FlatList do React Native.
+
+[06:10] Estamos passando como data={repo}, no estilo escrevemos width=100%, para ele pegar 100% da largura da tela, estamos extraindo a chave como repo.id, já que é o ID único para o repositório, e vamos renderizar, com renderItem, um TouchableOpacity. Os repositórios vão ser clicáveis para podermos navegar para tela onde vão ser exibidas as informações dos repositórios. Passamos um estilo para o TouchableOpacity, a estilos,repositorio, e para o texto escrevemos o estilo.repositorioNome, passando o item.name. No outro texto codamos estilos.repositorioData para passar a data que está escrito "Atualizado em" item.data.
+
+[06:57] Se salvarmos, agora exibiu em formato de lista os nossos repositórios, só que ele ainda não está redirecionado para outra tela. Para isso, dentro do TouchableOpacity, vamos escrever um onPress, ou seja, ao clicar nele, vamos navegar para a próxima tela. Então vamos criar uma arrow function, ={()=>} e escrever navigation.navigate(''), passando a tela que queremos ir, que é a 'InfoRepositorio'.
+
+[07:33] E agora se clicarmos no app em um repositório, ele mudou de tela. Só que não temos as informações ainda, então podemos passar essas informações como (). Passaremos igual o ID, com {item}, passando o item completo. Esse item está chegando nesse trecho quando renderizamos o nosso item da FlatList. Vou salvar e, ao clicar em um repositório do aplicativo agora, provavelmente já conseguimos acessar esse item na tela “info repositório”, que é aonde vamos, no próximo vídeo, descobrir como salvar os dados, editar e até deletar um repositório por meio dessa tela.
+
+[08:14] Então, na tela principal aprendemos que conseguimos pegar os dados usando um useEffect toda vez que entramos. Vamos testar aqui para ver se realmente está pegando os repositórios do usuário específico. Vou digitar “andreocunha”, clicar em “Buscar” e ver os repositórios. Percebemos que os nomes dos repositórios.
+
+[08:39] De fato ele está pegando os repositórios do usuário específico. Nos próximos vídeos vamos aprender a fazer uma edição desses dados, desse put, e um delete para podermos deletar as informações. Até lá.
+
+@@04
+Editando os repositórios
+
+[00:00] Temos a nossa tela de busca funcionando. Se digitarmos, por exemplo, “andreocunha” e clicar em “Buscar”, ele exibe as informações do André, a foto, o nome, o e-mail. Também conseguimos ver os repositórios, que são os projetos que o André desenvolveu.
+[00:13] Mas se o André precisar atualizar o nome de um repositório que escreveu errado e percebeu só depois que criou, como que podemos fazer isso no nosso aplicativo? Se clicarmos em algum desses repositórios, perceba que somos redirecionados para uma nova tela, a tela de repositório info, onde serão exibidas duas informações: o nome do repositório e a data de criação. Também temos dois botões: um botão “Salvar”, para salvar, e um botão “Deletar”, para deletar.
+
+[00:38] Então vai ser justamente nessa tela que vamos fazer essa nossa rota para atualizar a informação do repositório. Por enquanto, nada está sendo exibido, porque só estamos com uma tela estática. Só que já estamos passando as informações para essa tela.
+
+[00:55] Se olharmos aqui na tela dos repositórios percebemos que, ao clicar e mudar para essa tela de repositório info, passamos como parâmetro o item, que são as informações do repositório. Então já temos acesso a isso, já podemos exibir por exemplo no TextInput, o nome e data de criação para fazer isso? Na nossa página de InfoRepositorio, temos duas variáveis, o nome e data, que é justamente para podermos botar no nosso TextInput.
+
+[01:24] Então vou fazer isso, escrevendo value={nome}, que é justamente o TextInput referente ao nome. Como estou escrevendo a variável nome, vou codar nossa função, onChangeText = {setNome}, justamente para, ao digitar no input do nome, poder atualizar o nome e ele atualizar o conteúdo da variável nome. Então, se tiver escrito "API" e mudarmos para "API 2", ele vai ficar "API 2", porque a informação atualiza. Vou fazer a mesma coisa no debaixo, escrevendo value={data} e o onChangeText={setData}.
+
+[02:10] Só que ele ainda continua não exibindo nada, porque realmente não pegamos algumas informações que vieram por parâmetro ao mudar de uma tela para outra. Podemos fazer isso usando o nosso route no useState. Estamos com uma string vazia, então podemos codar route.params, acessando a informação do parâmetro, .item, que foi o item que passamos, .name, para o nome ele está vindo como "name". Se clicarmos em “Salvar”, ele já exibiu “api-escola” no aplicativo, que é o nome do repositório.
+
+[02:41] Vou fazer a mesma coisa aqui para data, route.params.item.data. Se você estiver fazendo um outro projeto e não souber como que está vindo a informação, você pode, por exemplo, fazer um console no que está vindo por parâmetro. Então vou escrever console.log(route.params) e, ao salvar e se olharmos no terminal, percebemos que foi passado um objeto. Dentro deste objeto tem outro objeto com nome “item”, por isso que acessamos params.item. Acessamos a propriedade daqui, que é o “nome” e a “data”. Temos mais duas propriedades, que é o ID, que é o ID do repositório, e o postId, que é ID do usuário, no caso, do André.
+
+[03:28] Mas como que fazemos para atualizar essas informações? Vamos ter que usar nossa Web API e um novo tipo de requisição, que é um PUT. Se dermos uma olhada no Insomnia, no que tínhamos feito de usuários, vejam que passávamos todos os parâmetros aqui, o login, avatar, o nome, e-mail, tudo, e ele já pegava essas informações daquele usuário e atualizava.
+
+[03:54] Então vamos ter que fazer exatamente isso: passar todas as informações do repositório como parâmetro para uma rota de atualizar os repositórios. Então vou tirar o nosso console.log() daqui, porque não precisamos mais dele, e vou salvar. Vamos lá na nossa pasta de “servicos > requisicoes > repositorios” e vamos criar nossa função para realmente salvar essa informação nova, atualizar.
+
+[04:17] Vou copiar essa função que fizemos de pegar o repositório e colar aqui embaixo. Vou alterar agora que não é mais "pegar", eu vou escrever como "salvar". Você pode escrever, "atualizar" ou o que você preferir, vou nomear como salvarRepositoriosDoUsuario. Algumas coisas virão como parâmetro. Como temos que passar tudo como parâmetro, eu vou escrever todas as informações, (postId, nome, data, id).Temos ID do repositório que é justamente o id. Se vocês repararem no Insomnia, passamos na rota.
+
+[04:52] Então temos aqui na nossa rota API, que é /users. Vamos usar a rota de repos, para os repositórios e, ao invés de passar o ID do usuário, vamos passar o ID do repositório e, no código, todas as informações do repositório.
+
+[05:07] Aqui no nosso try, não vamos usar o api.get, vamos usar o api.put, porque agora vamos atualizar uma informação. A nossa rota é /repos/${id}`); e vamos passar como parâmetro todas as informações. Então vou criar, depois da rota, um objeto onde vou passar todas as informações. Temos o campo name: nome, o campo data, data: data, o postId:postId e o id:id.
+
+[05:52] Só que, reparem, quando atualizamos uma informação, não precisamos pegar algo, então acaba que o resultado aqui é meio inútil. Podemos retirá-lo e deixar apenas o await, para esperar fazer a atualização. Porque não estamos fazendo um GET, não estamos pegando a informação, só estamos atualizando e enviando. Se der certo, podemos retornar uma string, vou retornar return 'sucesso' e, caso dê erro, vou retornar outra string, a return 'erro'.
+
+[06:25] Feito isso, podemos importar essa função que criamos na nossa página de info repositório, com import {salvarRepositorioDoUsuario} from ‘../../servicos/requisicoes/repositorios’. Aqui está o caminho da pasta. Agora podemos criar aquela função para, ao apertar esse botão “Salvar”, ele fazer alguma coisa.
+
+[06:55] Então temos um TouchableOpacity, que ele não está com onPress ainda, não está fazendo nada. Então vamos criar aqui a nossa função, function salvar(){}. Dentro dessa função vamos chamar a função de salvar repositórios da Web API, que já está sendo chamada na função salvarRepositoriosDoUsuario que criamos.
+
+[07:18] Como temos que esperar a requisição ser feita, vamos criar a nossa função como assíncrona, async function salvar(), e vamos chamar a requisição. Vou chamar e criar uma variável const resultado, lembrando que, nessa variável, o resultado que teremos será uma string de "sucesso" ou de "erro". Escrevemos const resultado = await salvarRepositoriosDoUsuario() e temos que passar como parâmetro todas aquelas informações.
+
+[07:49] Lembrando que passamos o postId como parâmetro, até vimos que ele está vindo no nosso objeto no terminal, então eu vou colocar route.params.item.postId,. Passamos o nome também. Eu não vou passar como route.params.item.name, porque esse nome veio fixo da outra tela. Queremos um nome que, ao digitar, ou seja, o que está nessa variável nome, seja enviado para atualizar.
+
+[08:28] Então vou colocar aqui nome e, da mesma forma, a data, se ele quiser atualizar a data da informação. Por fim o ID, que também está vindo como parâmetro. Então eu vou até copiar essa primeira linha e colar aqui, só que no final é só o .id.
+
+[08:45] Se der certo, podemos fazer duas coisas. Se o resultado for igual a "sucesso", ou seja, if (resultado = == “sucesso”){} podemos mostrar um alerta na tela, com Alert.alert(“Repositório atualizado!”).
+
+[09:12] Assim que ele atualizar, podemos fazer com que ele volte para a tela antiga, para podermos ver as informações. Então vou usar navigation.goBack, que é uma função que faz para voltar para tela anterior. Caso dê erro, mostramos um outro alerta, com else {Alert.alert(“Erro ao atualizar repositório”)}.
+
+[09:47] Agora temos que chamar essa função lá no botão. Então vamos para Touchable, onde tem o botão de "Salvar". Vamos criar aqui o onPress e chamar essa função salvar, escrevendo ={salvar}. Agora, no aplicativo, vou escrever no campo nome "api-escola2" e clicar em “salvar”. Ele falou que ela foi atualizada e voltou para tela anterior, só que não mostrou para nós o "api-escola2 na lista. Porém, se voltarmos para tela de perfil, e clicar em repositórios, olha lá, agora modificou. Isso aconteceu por quê?
+
+[10:21] Se olharmos no código da nossa página de repositórios, percebemos que o useEffect, que é o responsável por chamar aquela nossa função da Web API para fazer um GET, e pegar as informações atualizadas, só é executado uma vez. Quando vamos para a tela, com um goBack, quer dizer que a tela já estava construída. Por isso que ele não atualizou, então vamos ter que fazer uma forma de que, ao voltar para essa tela, ele atualize essa informação.
+
+[10:47] Podemos usar uma variável para atualizar o nosso useEffect, então eu vou criar uma variável, a const estaNaTela =. Essa variável será um booleano, só que vamos usar uma propriedade do React Navigation para podermos passar se a informação está na tela. Então ele altera o status dessa variável de true para false, ou de false para true. Se está na tela, fica true, se não está fica false.
+
+[11:20] Usamos useIsFocused();, que é uma função, importada com autocomplete do VS Code. Ela vem de import {useIsFocused} from ‘@react-navigation/native’;, então é uma variável que, ao estar na tela, vai estar com um valor: ou true, ou false.
+
+[11:42] Vou colocar na tela de "Repositório info". Agora, se atualizarmos, vou escrever “três”, e clicarmos em “Salvar”, ele volta para lista e atualizou a informação para nós sem ter que fazer um recarregamento da página. Ele recarregou sozinho a informação do resultado para nós.
+
+[12:00] Então nós fizemos a atualização, usando o PUT, nessa aula. Criamos nossa função para salvar e agora falta podermos deletar essa informação e criar um novo repositório. Nos vemos nos próximos vídeos.
+
+@@05
+Faça como eu fiz: requisição PUT
+
+Nas aulas 2 e 3, fizemos requisições de busca usando o GET.
+Além disso, na aula 3, fizemos uma requisição com um método novo, o PUT. Esse método permite atualizar informações no nosso banco de dados por meio da API.
+
+Agora, é sua vez de colocar a mão no código! Assim, faça o seguinte:
+
+1) Crie a função de "atualizarRepositório";
+
+2) Faça a requisição PUT para atualizar as informações desse repositório.
+
+Após implementar essas funcionalidades, teste seu projeto e veja se ele apresenta os comportamentos esperados.
+
+Precisando de ajuda ou tendo alguma dúvida, pergunte no fórum para que possamos te ajudar.
+
+Bons estudos! ;)
+
+Nesta atividade, os objetivos eram que você conseguisse:
+1) Criar a função de "atualizarRepositório";
+
+2) Fazer a requisição PUT para atualizar as informações desse repositório.
+
+Uma forma possível de solucionar isso poderia ser com o código que está neste commit.
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/aula3
+
+@@06
+Desafio: busca por repositórios
+
+Na tela principal, nós conseguimos fazer uma busca por um usuário pela informação de "login" dele. Agora, eu tenho um desafio para você!
+Tente fazer exatamente essa função de busca, porém na tela dos repositórios, para que seja possível fazer um filtro pelo nome do repositório.
+
+Dicas:
+
+1) Antes de tentar fazer essa busca diretamente no App, faça um teste usando o Insomnia e veja se a rota funciona;
+
+2) Copie o TextInput usado na tela Principal, veja que será necessário criar uma variável com o useState para salvar lá o texto que foi digitado no TextInput;
+
+3) Tente se basear na função de busca por usuário também, mas lembre-se que agora a rota tem que estar relacionada aos repositórios!
+
+Ps.: Não vale fazer um filtro usando JavaScript e os dados dos repositórios que já estão salvos na variável, hein! O objetivo do desafio é fazer requisições usando a Web API.
+
+Vamos lá?
+
+Nesta atividade, o objetivo era que você conseguisse criar um filtro para pesquisa de repositórios, por meio de uma função de busca localizada na tela dos repositórios.
+Uma forma possível de solucionar este desafio poderia ser com o código a seguir:
+
+1) Dentro do arquivo repositorios.js, crie a seguinte função:
+
+export async function PegarRepositoriosDoUsuarioPeloNome(id, nome){
+    const resultado = await api.get(`/repos?postId=${postId}&name=${name}`).then(response => {
+        return response.data;
+    }).catch(error => {
+        console.log(error);
+        return [];
+    })
+    return resultado;
+}COPIAR CÓDIGO
+2) E, dentro do arquivo index.js na pasta Repositorios, o código ficará com essas linhas a mais:
+
+import { Text, View, FlatList, TouchableOpacity, TextInput } from 'react-native';
+
+export default function Repositorios({ route, navigation }) {
+const [nomeRepo, setNomeRepo] = useState('');
+
+async function buscarRepositorioPorNome() {
+        const resultado = await PegarRepositoriosDoUsuarioPeloNome(route.params.id, nomeRepo);
+        setRepo(resultado);
+        setNomeRepo('');
+    }
+
+return (
+        <View style={estilos.container}>
+                <TextInput
+                    value={nomeRepo}
+                    onChangeText={setNomeRepo}
+                    placeholder="Busque por um usuário"
+                    autoCapitalize="none"
+                    style={estilos.entrada}
+                />
+                <TouchableOpacity 
+                    onPress={buscarRepositorioPorNome}
+                >
+                    <Text>Buscar</Text>
+                </TouchableOpacity>
+        </View>
+);
+}
+
+@@07
+O que aprendemos?
+
+Nesta aula, aprendemos a:
+Como fazer requisições GET:
+Fizemos duas requisições do tipo GET para nossa Web API, uma para buscar um usuário e outra para buscar os repositórios de um usuário.
+Como realizar requisições PUT:
+Esse tipo de requisição nos permitiu editar as informações de uns repositórios.
