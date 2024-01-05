@@ -93,12 +93,6 @@
   ],
   "repos": [
     {
-      "name": "api-escolas23",
-      "data": "1 de jan. de 20223",
-      "postId": 1,
-      "id": 2
-    },
-    {
       "id": 3,
       "name": "Arduino_AVES_Telemetria",
       "data": "1 de jan. de 2021",
@@ -133,6 +127,12 @@
       "name": "Alura_cursos",
       "data": "1 de jan. de 2021",
       "postId": 1
+    },
+    {
+      "name": "123",
+      "data": "321",
+      "postId": 2,
+      "id": 7
     }
   ]
 }

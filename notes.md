@@ -812,3 +812,170 @@ Como fazer requisições GET:
 Fizemos duas requisições do tipo GET para nossa Web API, uma para buscar um usuário e outra para buscar os repositórios de um usuário.
 Como realizar requisições PUT:
 Esse tipo de requisição nos permitiu editar as informações de uns repositórios.
+
+#### 06/01/2024
+
+@04-POST e DELETE: criando e removendo dados
+
+@@01
+Projeto da aula anterior
+
+Caso queira começar o curso a partir desta aula, você pode baixar o projeto da aula anterior.
+Bons estudos!
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/aula3
+
+@@02
+Criando um novo repositório
+
+[00:00] O nosso aplicativo AluraHub está ficando bem completo. Já conseguimos buscar por um usuário, ver os repositórios dele e até atualizar essas informações. Porém, se quisermos criar um novo repositório a partir do aplicativo do AluraHub, como que podemos fazer?
+[00:16] Existe o botão “Adicionar novo repositório”, que nos leva para essa tela “Criar Repositório”. Se dermos uma olhada nessa tela, percebemos que ela é bem simples, tendo duas variáveis, nome e data, que são as variáveis dos repositórios. Já temos as tags de input, só que agora temos que criar uma função para enviar esses dados.
+
+[00:38] Vamos aproveitar que já aprendemos a mexer no TextInput dp "Nome do repositório", escrevendo o value={nome} e o onChangeText={}, que vamos passar a função para alterar o valor dessa variável, com {setNome}. Da mesma forma, vou fazer aqui para o TextInput da "Data de criação", então vou escrever o value={data} e o onChangeText={setData}.
+
+[01:07] Já temos como salvar o que foi digitado aqui no input do aplicativo nas variáveis. Agora precisamos da nossa função para fazer a comunicação com a nossa Fake API e salvar um novo repositório.
+
+[01:20] Lembrando que temos que informar alguns campos, para ele saber que esse repositório é do usuário André, ou usuário Natália, ou qualquer usuário que tiver salvado no nosso JSON. Então vamos aqui para nosso arquivo de repositório, onde tem todas as nossas funções para chamadas de API. Vamos copiar essa função que criamos para salvar repositório, porque será muito semelhante, mas algumas coisas vão mudar.
+
+[01:49] Ao invés de salvar, nomearemos como criarRepositorisDoUsuario(). Vamos passar alguns parâmetros. O que um repositório tem? Ele tem o postId,, que é o ID do usuário nesse repositório, temos o nome, temos a data, só que ele ainda não tem o ID, porque não foi criado, então posso retirar esse campo.
+
+[02:10] A rota não vai ter o ID, porque queremos criar um novo repositório. Então, como queremos criar um novo repositório, temos que mudar o tipo de requisição para API, que não é mais PUT. Para criarmos alguma coisa usamos o .post. Vamos passar esses parâmetros aqui mesmo, name: nome, data:data, postId:postId. Se der tudo certo, ele retorna 'sucesso', se der um erro ele retorna um 'erro'. Vou salvar. Agora, no código da tela “Criar Repositórios”, importaremos essa função com import {criarRepositorioDoUsuario} from ‘../../servicos/requisicoes/repositorios’;.
+
+[02:55] Vamos criar a nossa função aqui, para ao apertar o botão, ele enviar esses dados que precisamos. Essa função será bem semelhante àquela que fizemos para salvar os dados, então vou aproveitar para copiar essa função e colar no nosso criarRepositorio. Só que eu vou mudar aqui para criar, lembrando que a nossa função é criarRepositoriosDoUsuario. Os parâmetros que passamos é postId, name, data, vamos apagar esse route.params.item.id. Agora sim, se tudo der certo, colocamos Alert.alert('Repositório criado!'), se der erro Alert.alert('Erro ao criar repositório'). Vou salvar.
+
+[03:45] Temos que criar essa nossa função de criar no botão, então vamos nele. Vou codar um onPress e passar a função criar ={criar}. No app, vou escrever o nome “teste” e a data de criação “10 de fevereiro”. Clico em “criar” e ele deu um erro. Vamos descobrir que erro foi esse? Abrindo o terminal, ele falou "[Undefined is not an object (evaluating ‘route.params.item’)]".
+
+[04:20] Olha só, não temos esse ID ainda, porque não foi passado como parâmetro. Então vamos voltar para nossa tela de repositórios, encontrar o botão que é para criar um novo repositório, o “Adicionar um novo repositório”, e aqui na nossa navegação vamos passar o ID do usuário. O ID, ele chega como route.params.id, então escrevemos {id: route.params.id}.
+
+[05:04] E lá na nossa tela de criar repositório, não é mais item, nem postId, é route.params.id. Vamos tentar criar um novo repositório? Vamos criar aqui um "teste", com data "10 de fevereiro". Vou clicar em “Criar”. Criado com sucesso e podemos ver que apareceu um novo repositório. Para verem que ele está funcionando, vamos com novo usuário, a Natália, “nataliakt”. Vou clicar em "Buscar" e vemos os repositórios da Natália. Vou criar um novo repositório, com nome “novo repo” e data “11 de abril". Clico em "Criar" e ele criou aqui o “novo repo”, “11 de abril”. Se clicarmos nele, conseguimos ver as informações.
+
+[05:50] Nessa aula aprendemos a criar um novo repositório, usamos a rota POST, passamos os parâmetros que essa rota tem e conseguimos exibir esse novo repositório na nossa lista da página repositórios. No próximo vídeo vamos aprender a excluir um repositório, caso precisemos, para poder apagar ele do nosso banco de dados. Até lá.
+
+@@03
+Deletando um repositório
+
+[00:00] Falta só apagarmos um item. Conseguimos criar um repositório, ler e até atualizá-lo, mas se precisamos apagar um repositório que foi criado, o nosso botão “Deletar” ainda não está funcionando. Eu vou fechar algumas telas que eu abri e criar um repositório. Essa página principal eu também vou fechar.
+[00:21] Na nossa tela de InfoRepositorio, já temos uma função de salvar, falta a nossa função de deletar um repositório. Vou criar aqui a função, com async function deletar(){}. Vamos chamar uma função que também vamos criar no nosso repositório para poder deletar esse repositório aqui.
+
+[00:47] Então, do nosso arquivo repositorio, eu vou copiar a função de criar e vou colar aqui embaixo. Agora ela será deletarRepositorioDoUsuario, só que, para deletarmos um repositório do usuário, só precisamos informar o ID do repositório. Com a nossa Web API sabendo o ID do item que precisa apagar, ela vai apagar.
+
+[01:22] Então a única coisa que precisamos passar como parâmetro nessa função é o id, que é o ID do repositório. Para apagarmos, temos que mudar o método, que agora é o .delete. Não precisamos passar nenhum dado para essa rota específica, só vamos chamar a rota. Aqui precisaremos passar o nosso ID do repositório, então vamos colocar aqui o /id. Se tudo der certo ele vai retornar 'sucesso', senão ele vai retornar 'erro'.
+
+[01:55] Vou para página InfoRepositorio, e vou acessar a função deletar(). Para importá-la e chamá-la, vamos escrever no import o deletarRepositorioDoUsuario. Na nossa função de deletar repositório, vamos chamá-la exatamente da mesma forma que fizemos com o salvar. Vou até copiar, porque será bem parecido, com exceção de algumas coisas.
+
+[02:31] Não vamos ter esses parâmetros aqui dentro, vou apagá-los, só passamos o ID, que vem por parâmetro, então é o route.params.item.id, porque mandamos o objeto inteiro. Se tudo der certo, ele vai falar “ok”, 'repositório deletado', senão, ele vai falar 'Erro ao deletar o repositório'. Vamos salvar, copiar essa função deletar() e colar no nosso botão de deletar, que está no TouchableOpacity. Vou codar o onPress={deletar}, inserindo a função deletar. Agora, ao clicarmos em “Deletar” no aplicativo, temos a mensagem "Repositório deletado com sucesso". Podemos perceber que ele realmente apagou.
+
+[03:27] Façamos um novo teste. Vamos criar um repositório aqui agora com uns números quaisquer. Vou clicar em “Criar” e ele criou. Se abrirmos e clicarmos em “Deletar”, ele realmente está deletando. Se quisermos, podemos até abrir o nosso JSON para vermos o que está acontecendo com ele. Vou abrir aqui no VS Code. Reparemos quando criarmos um novo item no aplicativo, com o nome “teste repo” e data “11 de abril”. Clicamos em “Criar” e ele realmente preencheu o nosso JSON com um novo dado. Quando abrimos para atualizar e mudamos o nome para “Teste 2”, ao clicarmos em “Salvar”, ele alterou o JSON. Se abrirmos e clicarmos em “Deletar”, ele realmente apagou o item.
+
+[04:14] Então o nosso CRUD está funcionando completo. Nós fizemos as quatro operações básicas para uma requisição para uma Web API. No próximo vídeo, vamos lançar um desafio para você tentar implementar nesse projeto. Muito obrigado por chegar até aqui. Parabéns, você realmente aprendeu os conceitos básicos de uma Web API no React Native.
+
+@@04
+Faça como eu fiz: criando e deletando repositórios
+
+Avançamos ainda mais com a Fake API no aplicativo AluraHub!
+Agora, é sua vez de colocar a mão no código! Assim, faça o seguinte:
+
+1) Implemente a funcionalidade de criar um novo repositório dentro do app;
+
+2) Crie a opção de deletar um repositório.
+
+Após implementar essas funcionalidades, teste seu projeto e veja se ele apresenta os comportamentos esperados.
+
+Precisando de ajuda ou tendo alguma dúvida, pergunte no fórum para que possamos te ajudar.
+
+Bons estudos! ;)
+
+esta atividade, os objetivos eram que você conseguisse:
+1) Implementar a funcionalidade de criar um novo repositório dentro do app com a requisição POST ;
+
+2) Criar a opção de deletar um repositório com a requisição DELETE.
+
+Veja uma maneira possível de solucionar esses problemas no código desse repositório.
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/aula4
+
+@@05
+Desafio
+
+[00:00] A teoria do nosso curso foi dada, mas eu tenho um belo desafio para você. Tudo que fizemos aqui nesse curso, foi utilizando uma Fake API, mas você, como desenvolvedor, ou futuro desenvolvedor ou desenvolvedora, precisará trabalhar com uma Web API real, não uma Fake API.
+[00:16] Então esse desafio é, vamos utilizar uma Web API real? Todo formato desse curso foi baseado no GitHub, então, se você reparar, temos os repositórios, a foto, o nome do usuário, e a nossa Fake API foi construída com base em uma API pública que o próprio GitHub disponibiliza para podermos testar. Esse projeto aqui é o AluraHub que desenvolveu, só que ele já tem algumas modificações para funcionar com Web API e não a Fake API.
+
+[00:44] Se digitarmos “andreocunha", ele vai exibir as mesmas informações que tínhamos recebido na nossa Fake API, mas se clicarmos para ver os repositórios, vamos teremos muito mais repositórios do que antes, isso porque ele está puxando esses dados do GitHub, e não da nossa Fake API.
+
+[01:04] Só que tem um ressalva, não vamos conseguir utilizar todas as requisições que fizemos. Por exemplo, não vamos conseguir atualizar essa informação e salvá-la. Por quê? Imagina se tivesse uma API do GitHub de forma pública, que você pudesse acessar os projetos de outras pessoas e modificá-los, até mesmo deletando. Seria ruim se você abrisse seu GitHub e, no outro dia, ver que não tem mais um projeto, porque alguém apagou.
+
+[01:31] Então o GitHub não disponibiliza isso de forma pública assim. O máximo que vamos conseguir fazer é leituras de repositórios e informações do usuário, que está público mesmo no próprio GitHub.
+
+[01:43] Vamos testar um outro usuário que não estava na nossa Fake API, a Jenny, é Alura Star e ela tem um GitHub. Vamos pesquisar para vermos como é o repositório dela? "jeniblodev". Se clicarmos em “Buscar”, exibiu as informações da Jenny e podemos ver todos os repositórios que a Jenny fez. Tudo que ela publicou está aqui, só que não vamos conseguir, claro, nem salvar, nem deletar, ele vai dar um erro.
+
+[02:14] Esse é o desafio que eu tenho para você: tente utilizar a Web API do GitHub para poder pegar esses dados. Ela será um pouco diferente da nossa Fake API, vamos dar uma olhada.
+
+[02:25] Aqui temos a URL que informa a rota para podermos pegarmos os dados do usuário, no caso, https://api.github.com/users/andreocunha. Depois do "/users/", escrevemos o nickname da pessoa do GitHub. Se clicarmos nesse link, temos muitas informações aqui a respeito desse usuário.
+
+[02:45] Só que, se você reparar, alguns campos são semelhantes ao que fizemos na nossa Fake API. Por exemplo, o campo da imagem, avatar_url. Temos o login também e todos os outros campos que utilizamos no nosso projeto estão aqui, mas existem outras opções você pode implementar no seu projeto, por exemplo, pegar a “bio” do usuário. Você também consegue pegar usando a API do GitHub.
+
+[03:07] Se testarmos a API do segundo link, além de passarmos o usuário, estamos passando uma outra rota, que é "/repos", que ele vai pegar os repositórios desse usuário em específico. Se clicarmos, percebemos que é um vetor com vários objetos, sendo que cada objeto é um repositório que o André fez e publicou no GitHub.
+
+[03:29] Então esse é o desafio que eu tenho para você. Se tiver dúvida, pode nos perguntar no fórum. Caso você queira ver, terá uma atividade com a solução também, mas não deixe de fazer. Fico por aqui e até a próxima.
+
+@@06
+Desafio: aplicando Web API real
+
+Neste curso, estudamos a implementação de uma Fake API no aplicativo Alurahub. Com estes conhecimentos adquiridos, você está apto para conectar sua aplicação e deixá-la online, usando uma Web API real.
+Siga os passos a seguir:
+
+Passo 1): Use a url da Web API do Github:
+
+https://api.github.com/users/andreocunha
+
+Observe que depois do “/user/” se encontra o login do meu usuário. Fique à vontade para usar o seu ou de qualquer outro usuário.
+
+Para ver os repositórios de um usuário específico, utilize essa rota na Web API:
+
+https://api.github.com/users/andreocunha/repos
+
+Note novamente que estão sendo vistos os repositórios do “andreocunha”, mas o usuário pode ser substituído por qualquer outro.
+
+Passo 2): Implemente as requisições no código, conforme visto com a Fake API. No entanto, não conseguiremos utilizar as requisições POST, PUT e DELETE para a Web API do github, visto que tornaria o sistema deles pouco seguro e, por isso, não temos permissão quando fazemos esses tipos de requisições. Mas fazer consultas com o GET é possível e isso já deixará seu sistema bem legal e online!
+
+O resultado esperado é que o aplicativo consiga acessar e exibir os dados da API.
+
+Você pode fazer a implementação com o Axios (vimos ao longo do curso) ou Fetch (vimos apenas em um artigo).
+Se tiver dúvidas, aparece lá no fórum e poderemos ajudar.
+
+Ao finalizar o desafio, aproveite para compartilhar o seu projeto nas redes sociais como LinkedIn e Instagram e marcar a gente lá!
+
+https://api.github.com/users/andreocunha
+
+https://api.github.com/users/andreocunha/repos
+
+O objetivo deste desafio era implementar uma Web API real no aplicativo Alurahub. Você poderia fazer as requisições com Axios ou Fetch, o importante era conectar o app com a Web API pública do Github.
+Veja uma maneira possível de solucionar esse desafio nesse repositório.
+
+https://github.com/alura-cursos/react-native-ficando-online/tree/desafio
+
+@@07
+O que aprendemos?
+
+Nesta aula, aprendemos a:
+Implementar requisições para criar e editar dados:
+Implementamos mais duas requisições, o POST e o DELETE. Com elas, conseguimos criar e deletar um repositório, respectivamente.
+Implementar uma Web API real no desafio:
+Lançamos um belo desafio de implementar uma Web API real no projeto já desenvolvido no curso. No caso, utilizamos a Web API fornecida pelo Github.
+Assim, estamos quase no fim de mais um curso de React Native aqui da Alura.
+
+@@08
+Conclusão
+
+[00:00] Parabéns a você que chegou até o final desse curso. Aqui você aprendeu o que é uma Web API e uma Fake API, assim como a diferença entre elas. Aprendemos a fazer requisições na nossa Fake API, mas também aprendemos que, antes de aplicar diretamente em um projeto com React Native, por exemplo, podemos utilizar um aplicativo, o Insomnia para poder testar as rotas da nossa Web API, e ver se tudo está funcionando como esperado.
+[00:25] Fizemos o CRUD básico aqui, para podermos criar uma nova informação usando o POST, atualizá-la usando o PUT, ler a informações usando o GET e deletar uma informação do nosso banco de dados usando o DELETE.
+
+[00:39] No nosso caso, o banco de dados era o arquivo de JSON que criamos. Ao passar por React Native você aprendeu que existem algumas formas de fazer requisições, uma delas é usando fetch e a outra Axios, entendendo a diferença entre elas e porque utilizamos o Axios nesse projeto.
+
+[00:53] Também aplicamos boas práticas de programação, dividindo em pastas as nossas funções de requisições, tanto para o usuário, quanto para repositórios. Depois fomos testando nossa aplicação toda na tela do aplicativo, usando um componente novo, TextInput, que nos permitiu digitar informações, pegar o que foi digitado e fazer as requisições.
+
+[01:16] Aqui conseguimos fazer um read usando um GET. Também fizemos um read com GET dos nossos repositórios, conseguimos atualizar as informações usando o PUT, conseguimos deletar uma informação usando DELETE e criar uma nova informação usando o POST. Tudo nós fizemos no aplicativo.
+
+[01:38] Também fizemos um desafio, onde foi possível utilizar uma API real, a API do GitHub, para esse projeto, usando a mesma base do AluraHub. Eu espero que esse curso tenha sido útil para você e que você possa utilizá-lo em seus projetos, ou trabalhos futuros. Não deixe de compartilhar conosco o seu progresso, como que foi fazer esse curso, se foi fácil. Deixa um feedback para nós, isso é muito importante para que possamos melhorar cada vez mais, também não deixe de compartilhar seus projetos conosco, nas redes sociais, e nos marcar lá.
+
+[02:08] Espero que você tenha curtido e nos vemos na próxima. Até lá.
